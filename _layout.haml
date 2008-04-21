@@ -1,0 +1,11 @@
+!!!Strict
+%html
+  %head
+    %title= @title || "test"
+    %script{:src=>"/javascripts/prototype.js", :type=>"text/javascript"}
+    %script{:src=>"/javascripts/effects.js", :type=>"text/javascript"}
+    %script{:src=>"/javascripts/lowpro.js", :type=>"text/javascript"}
+    %script{:src=>"/javascripts/popup_behavior.js", :type=>"text/javascript"}
+    %script{:src=>"/javascripts/application.js", :type=>"text/javascript"}
+  %body
+    =yield

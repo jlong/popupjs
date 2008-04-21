@@ -1,0 +1,3 @@
+Event.addBehavior({
+  '.popup': PopupBehavior()
+});
