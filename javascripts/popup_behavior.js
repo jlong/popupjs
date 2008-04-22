@@ -1,3 +1,12 @@
+/*
+ *  popup_behavior.js
+ *  
+ *  dependencies: prototype.js, effects.js, lowpro.js
+ *  
+ *  Copyright (c) 2008, John W. Long
+ *  
+ */
+
 PopupBehavior = Behavior.create({
   
   initialize: function() {
@@ -26,11 +35,25 @@ PopupWindow = Class.create({
   },
   
   show: function() {
-    this.position();
-    this.element.show();
+    this.iframe.contentWindow.closePopup = this.hide.bind(this);
+    this.element.setStyle('display: block; visibility: hidden');
+    this.positionWindow();
+    this.element.setStyle('visibility: visible');
   },
   
-  position: function() {
+  hide: function() {
+    this.element.hide();
+  },
+  
+  positionWindow: function() {
+    var body = this.iframe.contentWindow.document.getElementsByTagName('body')[0];
+    var width = body.getWidth();
+    var height = body.getHeight();
+    body.setStyle('overflow: hidden');
+    this.iframe.setStyle({
+      width: width + 'px',
+      height: height + 'px'
+    });
     this.element.setStyle({
       left: parseInt((document.viewport.getWidth() - this.element.getWidth()) / 2) + 'px',
       top: parseInt((document.viewport.getHeight() - this.element.getHeight()) / 2.5) + 'px'
@@ -39,7 +62,7 @@ PopupWindow = Class.create({
   
   render: function() {
     this.element.setStyle(
-      'padding: 8px'
+      'padding: 0 8px'
     );
     
     var top = $div({style: 'background: url(/images/background.png); height: 8px'});
@@ -73,8 +96,8 @@ PopupWindow = Class.create({
     });
     outer.insert(inner);
     
-    var iframe = new Element('iframe', {src: this.url, style: 'border: 0; width: 100%'});
-    inner.insert(iframe);
+    this.iframe = new Element('iframe', {src: this.url, style: 'border: 0; width: 100%'});
+    inner.insert(this.iframe);
   }
   
 });
