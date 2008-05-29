@@ -17,7 +17,7 @@ You can also "popup" a specific div by referencing it by ID:
 
 You will need to install the following hook:
 
-  Event.addBehavior({'a.popup': PopupTriggerBehavior()});
+  Event.addBehavior({'a.popup': Popup.TriggerBehavior()});
 
 --------------------------------------------------------------------------
 
