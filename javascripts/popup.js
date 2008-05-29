@@ -122,9 +122,12 @@ Popup.AbstractWindow = Class.create({
   
   show: function() {
     this.beforeShow();
-    this.centerWindowInView();
     this.element.show();
-    this.focus();
+    this.afterShow();
+  },
+  
+  hide: function() {
+    this.element.hide();
   },
   
   focus: function() {
@@ -137,18 +140,19 @@ Popup.AbstractWindow = Class.create({
   },
   
   beforeShow: function() {
-    // IE does not render the border of the popup correctly, nor does it apply the proper stylings to the buttons
     if (Prototype.Browser.IE) {
+      // IE fixes
       var width = this.element.getWidth() - (Popup.BorderThickness * 2);
       this.top.setStyle("width:" + width + "px");
       this.bottom.setStyle("width:" + width + "px");
     }
+    this.centerWindowInView();
   },
   
-  hide: function() {
-    this.element.hide();
+  afterShow: function() {
+    this.focus();
   },
-  
+
   centerWindowInView: function() {
     var offsets = document.viewport.getScrollOffsets();
     this.element.setStyle({

@@ -18,9 +18,22 @@
     %p
       %a.popup{:href=>"/test/ajax.haml"} Ajax Popup
     
+    %p
+      %a.popup{:href=>"#search"} Popup Input
+    
     .popup#test{:style=>"display: none"}
       %h3 Popup Window
       .popup_content
         %p Hello world!
         %p
           %a{:href=>"javascript: Element.closePopup('test')"} Close
+    
+    .popup#search{:style=>"display: none"}
+      %h3 Search
+      .popup_content
+        %form
+          %p
+            %input{:type=>"text", :name=>"query", :id=>"query", :value=>""}/
+          %p
+            %a{:href=>"javascript: Element.closePopup('search')"} Close
+    
