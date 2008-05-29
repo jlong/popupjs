@@ -54,13 +54,15 @@ var Popup = {
   BorderBottomRightImage: '/images/popup_border_bottom_right.png'
 };
 
-Popup.BorderImages = $A([
-  Popup.BorderImage,
-  Popup.BorderTopLeftImage,
-  Popup.BorderTopRightImage,
-  Popup.BorderBottomLeftImage,
-  Popup.BorderBottomRightImage
-]);
+Popup.borderImages = function() {
+  return $A([
+    Popup.BorderImage,
+    Popup.BorderTopLeftImage,
+    Popup.BorderTopRightImage,
+    Popup.BorderBottomLeftImage,
+    Popup.BorderBottomRightImage
+  ]);
+}
 
 Popup.TriggerBehavior = Behavior.create({
   initialize: function() {
@@ -186,7 +188,8 @@ Element.addMethods({
 // Preload Images
 document.observe('dom:loaded', function() {
   var body = $(document.getElementsByTagName('body')[0]);
-  Popup.BorderImages.each(function(image) {
-    body.insert($img({src: image, alt: '', style: 'display:none'}));
+  Popup.borderImages().each(function(src) {
+    var image = new Image(0, 0);
+    image.src = src;
   });
 });
