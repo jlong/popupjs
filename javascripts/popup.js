@@ -122,9 +122,14 @@ Popup.AbstractWindow = Class.create({
     this.beforeShow();
     this.centerWindowInView();
     this.element.show();
+    this.focus();
+  },
+  
+  focus: function() {
     var form = this.element.down('form');
     if (form) {
-      var element = form.getElements()[0] || form.down('button');
+      var elements = form.getElements().reject(function(e) { return e.type == 'hidden' });
+      var element = elements[0] || form.down('button');
       if (element) element.focus();
     }
   },
@@ -167,9 +172,7 @@ Popup.AjaxWindow = Class.create(Popup.AbstractWindow, {
   },
   
   show: function($super) {
-    var update = this.content;
-    new Ajax.Updater(this.content, this.url, {asynchronous: false, method: "get"});
-    $super();
+    new Ajax.Updater(this.content, this.url, {asynchronous: false, method: "get", onComplete: $super});
   }
 });
 
