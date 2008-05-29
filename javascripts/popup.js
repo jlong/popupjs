@@ -64,6 +64,16 @@ Popup.borderImages = function() {
   ]);
 }
 
+Popup.preloadImages = function() {
+  if (!Popup.imagesPreloaded) {
+    Popup.borderImages().each(function(src) {
+      var image = new Image();
+      image.src = src;
+    });
+    Popup.preloadedImages = true;
+  }
+}
+
 Popup.TriggerBehavior = Behavior.create({
   initialize: function() {
     var matches = this.element.href.match(/\#(.+)$/);
@@ -86,6 +96,7 @@ Popup.TriggerBehavior = Behavior.create({
 
 Popup.AbstractWindow = Class.create({
   initialize: function() {
+    Popup.preloadImages();
     this.buildWindow();
   },
   
@@ -187,13 +198,4 @@ Element.addMethods({
   closePopup: function(element) {
     $(element).up('div.popup_window').hide();
   }
-});
-
-// Preload Images
-document.observe('dom:loaded', function() {
-  var body = $(document.getElementsByTagName('body')[0]);
-  Popup.borderImages().each(function(src) {
-    var image = new Image();
-    image.src = src;
-  });
 });
