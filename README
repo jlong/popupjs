@@ -1,4 +1,4 @@
-popup_behavior.js
+popup.js
 
 dependencies: prototype.js, effects.js, lowpro.js
 
@@ -6,17 +6,23 @@ dependencies: prototype.js, effects.js, lowpro.js
 
 Allows you to open up a URL inside of a Facebook-style window. To use
 simply assign the class "popup" to a link that contains an href to the
-page that you would like to load up inside of a window:
+HTML snippet that you would like to load up inside a window:
 
   <a class="popup" href="window.html">Window</a>
 
+You can also "popup" a specific div by referencing it by ID:
+
+  <a class="popup" href="#my_div">Popup</a>
+  <div id="my_div" style="display:none">Hello World!</div>
+
 You will need to install the following hook:
 
-  Event.addBehavior({'a.popup': PopupBehavior()});
+  Event.addBehavior({'a.popup': PopupTriggerBehavior()});
 
 --------------------------------------------------------------------------
 
 Copyright (c) 2008, John W. Long
+Portions copyright (c) 2008, Five Points Solutions, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a
 copy of this software and associated documentation files (the "Software"),
@@ -35,4 +41,3 @@ THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
-
