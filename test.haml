@@ -1,8 +1,34 @@
-- content_for :meta do
-  %style{:type=>"text/css"}
-    :sass
-      body
-        font-family: "Trebuchet MS", Helvetica, Arial, sans-serif
-        background: url(/images/checkered.png)
-
-%a.popup{:href=>"/inside.haml"} Popup
+!!!Strict
+%html
+  %head
+    %title Test
+    %script{:type=>"text/javascript", :src=>"/javascripts/prototype.js"}
+    %script{:type=>"text/javascript", :src=>"/javascripts/effects.js"}
+    %script{:type=>"text/javascript", :src=>"/javascripts/lowpro.js"}
+    %script{:type=>"text/javascript", :src=>"/javascripts/popup.js"}
+    %script{:type=>"text/javascript", :src=>"/javascripts/application.js"}
+    %style{:type=>"text/css"}
+      :sass
+        body
+          font-family: "Trebuchet MS", Helvetica, Arial, sans-serif
+          font-size: 90%
+          background: url(/images/checkered.png)        
+        .popup
+          padding: 10px
+          h3
+            background-color: #e5e5e5
+            font-size: 110%
+            margin: -10px -10px 0 -10px
+            padding: 10px
+  %body
+    %p
+      %a.popup{:href=>"#test"} Popup
+    
+    %p
+      %a.popup{:href=>"/inside.haml"} Ajax Popup
+    
+    .popup#test{:style=>"display: none"}
+      %h3 Hello World!
+      %p This is really just a test!
+      %p
+        %a{:href=>"#", :onclick=>"Element.closePopup(this)"} Close

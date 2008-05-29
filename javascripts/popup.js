@@ -1,5 +1,5 @@
 /*
- *  popup_behavior.js
+ *  popup.js
  *
  *  dependencies: prototype.js, effects.js, lowpro.js
  *
@@ -7,17 +7,23 @@
  *  
  *  Allows you to open up a URL inside of a Facebook-style window. To use
  *  simply assign the class "popup" to a link that contains an href to the
- *  page that you would like to load up inside of a window:
+ *  HTML snippet that you would like to load up inside a window:
  *  
  *    <a class="popup" href="window.html">Window</a>
+ *
+ *  You can also "popup" a specific div by referencing it by ID:
+ *
+ *    <a class="popup" href="#my_div">Popup</a>
+ *    <div id="my_div" style="display:none">Hello World!</div>
  *  
  *  You will need to install the following hook:
  *  
- *    Event.addBehavior({'a.popup': PopupBehavior()});
+ *    Event.addBehavior({'a.popup': PopupTriggerBehavior()});
  *
  *  --------------------------------------------------------------------------
  *  
  *  Copyright (c) 2008, John W. Long
+ *  Portions copyright (c) 2008, Five Points Solutions, Inc.
  *  
  *  Permission is hereby granted, free of charge, to any person obtaining a
  *  copy of this software and associated documentation files (the "Software"),
@@ -39,10 +45,15 @@
  *  
  */
 
-PopupBehavior = Behavior.create({
+PopupTriggerBehavior = Behavior.create({
   
   initialize: function() {
-    this.window = new PopupWindow(this.element.href);
+    var matches = this.element.href.match(/\#(.+)$/);
+    if (matches) {
+      this.window = new PopupWindow($(matches[1]));
+    } else {
+     this.window = new PopupAjaxWindow(this.element.href);
+    }
   },
   
   onclick: function(event) {
@@ -56,71 +67,99 @@ PopupBehavior = Behavior.create({
   
 });
 
-PopupWindow = Class.create({
+AbstractPopupWindow = Class.create({
+  initialize: function() {
+    this.buildWindow();
+  },
   
-  initialize: function(url) {
-    this.url = url;
-    this.element = $div({style: 'display: none; position: absolute'});
-    this.render();
-    this.body = $$('body').first();
-    this.body.insert(this.element);
+  buildWindow: function() {
+    this.element = $div({'class': 'popup_window', style: 'display: none; padding: 0 8px; position: absolute'});
+    
+    this.top = $div({style: 'background: url(/images/popup_border_background.png); height: 8px'});
+    this.element.insert(this.top);
+    
+    var outer = $div({style: 'background: url(/images/popup_border_background.png); margin: 0px -8px; padding: 0px 8px; position: relative'});
+    this.element.insert(outer);
+    
+    this.bottom = $div({style: 'background: url(/images/popup_border_background.png); height: 8px'});
+    this.element.insert(this.bottom);
+    
+    var topLeft = $img({src: '/images/popup_border_top_left.png', style: 'position: absolute; left: 0; top: -8px'});
+    outer.insert(topLeft);
+    
+    var topRight = $img({src: '/images/popup_border_top_right.png', style: 'position: absolute; right: 0; top: -8px'});
+    outer.insert(topRight);
+    
+    var bottomLeft = $img({src: '/images/popup_border_bottom_left.png', style: 'position: absolute; left: 0; bottom: -8px'});
+    outer.insert(bottomLeft);
+    
+    var bottomRight = $img({src: '/images/popup_border_bottom_right.png', style: 'position: absolute; right: 0; bottom: -8px'});
+    outer.insert(bottomRight);
+    
+    this.content = $div({style: 'background-color: white'});
+    outer.insert(this.content);
+    
+    var body = $$('body').first();
+    body.insert(this.element);
   },
   
   show: function() {
-    this.iframe.contentWindow.closePopup = this.hide.bind(this);
-    this.element.setStyle('display: block; visibility: hidden');
-    this.positionWindow();
-    this.element.setStyle('visibility: visible');
+    this.beforeShow();
+    this.centerWindowInView();
+    this.element.show();
+    var form = this.element.down('form');
+    if (form) {
+      var element = form.getElements()[0] || form.down('button');
+      if (element) element.focus();
+    }
+  },
+  
+  beforeShow: function() {
+    // IE does not render the border of the popup correctly, nor does it apply the proper stylings to the buttons
+    if (Prototype.Browser.IE) {
+      var width = this.element.getWidth() - 16; // Width of containing div minus the width of the borders
+      this.top.setStyle("width:" + width + "px");
+      this.bottom.setStyle("width:" + width + "px");
+    }
   },
   
   hide: function() {
     this.element.hide();
   },
   
-  positionWindow: function() {
-    var body = this.iframe.contentWindow.document.getElementsByTagName('body')[0];
-    var width = body.getWidth();
-    var height = body.getHeight();
-    body.setStyle('overflow: hidden');
-    this.iframe.setStyle({
-      width: width + 'px',
-      height: height + 'px'
-    });
+  centerWindowInView: function() {
+    var offsets = document.viewport.getScrollOffsets();
     this.element.setStyle({
-      left: parseInt((document.viewport.getWidth() - this.element.getWidth()) / 2) + 'px',
-      top: parseInt((document.viewport.getHeight() - this.element.getHeight()) / 2.5) + 'px'
+      left: parseInt(offsets.left + (document.viewport.getWidth() - this.element.getWidth()) / 2) + 'px',
+      top: parseInt(offsets.top + (document.viewport.getHeight() - this.element.getHeight()) / 2.2) + 'px'
     });
+  }
+});
+
+PopupWindow = Class.create(AbstractPopupWindow, {
+  initialize: function($super, element) {
+    $super();
+    element.remove();
+    this.content.update(element);
+    element.show();
+  }
+});
+
+PopupAjaxWindow = Class.create(AbstractPopupWindow, {
+  initialize: function($super, url) {
+    $super();
+    this.url = url;
   },
   
-  render: function() {
-    this.element.setStyle('padding: 0 8px');
-    
-    var top = $div({style: 'background: url(/images/background.png); height: 8px'});
-    this.element.insert(top);
-    
-    var outer = $div({style: 'background: url(/images/background.png); margin: 0px -8px; padding: 0px 8px; position: relative'});
-    this.element.insert(outer);
-    
-    var bottom = $div({style: 'background: url(/images/background.png); height: 8px'});
-    this.element.insert(bottom);
-    
-    var topLeft = $img({src: '/images/top_left.png', style: 'position: absolute; left: 0; top: -8px'});
-    outer.insert(topLeft);
-    
-    var topRight = $img({src: '/images/top_right.png', style: 'position: absolute; right: 0; top: -8px'});
-    outer.insert(topRight);
-    
-    var bottomLeft = $img({src: '/images/bottom_left.png', style: 'position: absolute; left: 0; bottom: -8px'});
-    outer.insert(bottomLeft);
-    
-    var bottomRight = $img({src: '/images/bottom_right.png', style: 'position: absolute; right: 0; bottom: -8px'});
-    outer.insert(bottomRight);
-    
-    var inner = $div({style: 'background-color: white'});
-    outer.insert(inner);
-    
-    this.iframe = new Element('iframe', {src: this.url, style: 'border: 0; width: 100%'});
-    inner.insert(this.iframe);
+  show: function($super) {
+    var update = this.content;
+    new Ajax.Updater(this.content, this.url, {asynchronous: false, method: "get"});
+    $super();
   }
-  
+});
+
+Element.addMethods({
+  closePopup: function(element) {
+    $(element).up('div.popup_window').hide();
+  }
 });

@@ -1,20 +1,6 @@
-- content_for :meta do
-  %style{:type=>"text/css"}
-    :sass
-      body
-        font-family: "Trebuchet MS", Helvetica, Arial, sans-serif
-        margin: 0
-        padding: .75em
-        width: 20em
-        height: 7em
-      h3
-        background-color: #e5e5e5
-        font-size: 110%
-        margin: -0.7em -0.7em 0 -0.7em
-        padding: .7em
+.popup#just_a_test
+  %h3 Just a Test
+  %p Note the transparent border.
 
-%h3 Just a Test
-%p Note the transparent border.
-
-%p
-  %a{:href=>"javascript: closePopup()"} Close
+  %p
+    %a{:href=>"javascript: Element.closePopup('just_a_test')"} Close
