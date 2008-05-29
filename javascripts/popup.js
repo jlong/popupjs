@@ -193,7 +193,7 @@ Element.addMethods({
 document.observe('dom:loaded', function() {
   var body = $(document.getElementsByTagName('body')[0]);
   Popup.borderImages().each(function(src) {
-    var image = new Image(0, 0);
+    var image = new Image();
     image.src = src;
   });
 });
