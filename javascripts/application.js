@@ -1,3 +1,3 @@
 Event.addBehavior({
-  'a.popup': PopupTriggerBehavior()
+  'a.popup': Popup.TriggerBehavior()
 });

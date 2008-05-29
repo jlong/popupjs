@@ -10,16 +10,24 @@
     %style{:type=>"text/css"}
       :sass
         body
-          font-family: "Trebuchet MS", Helvetica, Arial, sans-serif
-          font-size: 90%
+          font-family: "Lucida Grande", Helvetica, Arial, sans-serif
+          font-size: 80%
           background: url(/images/checkered.png)        
         .popup
           padding: 10px
           h3
-            background-color: #e5e5e5
+            background-color: #6D84B4
+            border: 1px solid #3B5998
+            color: white
             font-size: 110%
             margin: -10px -10px 0 -10px
-            padding: 10px
+            padding: 5px 9px
+          .popup_content
+            font-size: 90%
+            border: 1px solid #555
+            border-top: none
+            margin: 0 -10px -10px -10px
+            padding: 1px 9px
   %body
     %p
       %a.popup{:href=>"#test"} Popup
@@ -29,6 +37,7 @@
     
     .popup#test{:style=>"display: none"}
       %h3 Hello World!
-      %p This is really just a test!
-      %p
-        %a{:href=>"#", :onclick=>"Element.closePopup(this)"} Close
+      .popup_content
+        %p This is really just a test!
+        %p
+          %a{:href=>"javascript: Element.closePopup('test')"} Close

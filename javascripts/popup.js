@@ -18,7 +18,7 @@
  *  
  *  You will need to install the following hook:
  *  
- *    Event.addBehavior({'a.popup': PopupTriggerBehavior()});
+ *    Event.addBehavior({'a.popup': Popup.TriggerBehavior()});
  *
  *  --------------------------------------------------------------------------
  *  
@@ -45,14 +45,30 @@
  *  
  */
 
-PopupTriggerBehavior = Behavior.create({
-  
+var Popup = {
+  BorderThickness: 8,
+  BorderImage: '/images/popup_border_background.png',
+  BorderTopLeftImage: '/images/popup_border_top_left.png',
+  BorderTopRightImage: '/images/popup_border_top_right.png',
+  BorderBottomLeftImage: '/images/popup_border_bottom_left.png',
+  BorderBottomRightImage: '/images/popup_border_bottom_right.png'
+};
+
+Popup.BorderImages = $A([
+  Popup.BorderImage,
+  Popup.BorderTopLeftImage,
+  Popup.BorderTopRightImage,
+  Popup.BorderBottomLeftImage,
+  Popup.BorderBottomRightImage
+]);
+
+Popup.TriggerBehavior = Behavior.create({
   initialize: function() {
     var matches = this.element.href.match(/\#(.+)$/);
     if (matches) {
-      this.window = new PopupWindow($(matches[1]));
+      this.window = new Popup.Window($(matches[1]));
     } else {
-     this.window = new PopupAjaxWindow(this.element.href);
+     this.window = new Popup.AjaxWindow(this.element.href);
     }
   },
   
@@ -64,36 +80,35 @@ PopupTriggerBehavior = Behavior.create({
   popup: function() {
     this.window.show();
   }
-  
 });
 
-AbstractPopupWindow = Class.create({
+Popup.AbstractWindow = Class.create({
   initialize: function() {
     this.buildWindow();
   },
   
   buildWindow: function() {
-    this.element = $div({'class': 'popup_window', style: 'display: none; padding: 0 8px; position: absolute'});
+    this.element = $div({'class': 'popup_window', style: 'display: none; padding: 0 ' + Popup.BorderThickness + 'px; position: absolute'});
     
-    this.top = $div({style: 'background: url(/images/popup_border_background.png); height: 8px'});
+    this.top = $div({style: 'background: url(' + Popup.BorderImage + '); height: ' + Popup.BorderThickness + 'px'});
     this.element.insert(this.top);
     
-    var outer = $div({style: 'background: url(/images/popup_border_background.png); margin: 0px -8px; padding: 0px 8px; position: relative'});
+    var outer = $div({style: 'background: url(' + Popup.BorderImage + '); margin: 0px -' + Popup.BorderThickness + 'px; padding: 0px ' + Popup.BorderThickness + 'px; position: relative'});
     this.element.insert(outer);
     
-    this.bottom = $div({style: 'background: url(/images/popup_border_background.png); height: 8px'});
+    this.bottom = $div({style: 'background: url(' + Popup.BorderImage + '); height: ' + Popup.BorderThickness + 'px'});
     this.element.insert(this.bottom);
     
-    var topLeft = $img({src: '/images/popup_border_top_left.png', style: 'position: absolute; left: 0; top: -8px'});
+    var topLeft = $img({src: Popup.BorderTopLeftImage, style: 'position: absolute; left: 0; top: -' + Popup.BorderThickness + 'px'});
     outer.insert(topLeft);
     
-    var topRight = $img({src: '/images/popup_border_top_right.png', style: 'position: absolute; right: 0; top: -8px'});
+    var topRight = $img({src: Popup.BorderTopRightImage, style: 'position: absolute; right: 0; top: -' + Popup.BorderThickness + 'px'});
     outer.insert(topRight);
     
-    var bottomLeft = $img({src: '/images/popup_border_bottom_left.png', style: 'position: absolute; left: 0; bottom: -8px'});
+    var bottomLeft = $img({src: Popup.BorderBottomLeftImage, style: 'position: absolute; left: 0; bottom: -' + Popup.BorderThickness + 'px'});
     outer.insert(bottomLeft);
     
-    var bottomRight = $img({src: '/images/popup_border_bottom_right.png', style: 'position: absolute; right: 0; bottom: -8px'});
+    var bottomRight = $img({src: Popup.BorderBottomRightImage, style: 'position: absolute; right: 0; bottom: -' + Popup.BorderThickness + 'px'});
     outer.insert(bottomRight);
     
     this.content = $div({style: 'background-color: white'});
@@ -117,7 +132,7 @@ AbstractPopupWindow = Class.create({
   beforeShow: function() {
     // IE does not render the border of the popup correctly, nor does it apply the proper stylings to the buttons
     if (Prototype.Browser.IE) {
-      var width = this.element.getWidth() - 16; // Width of containing div minus the width of the borders
+      var width = this.element.getWidth() - (Popup.BorderThickness * 2);
       this.top.setStyle("width:" + width + "px");
       this.bottom.setStyle("width:" + width + "px");
     }
@@ -136,7 +151,7 @@ AbstractPopupWindow = Class.create({
   }
 });
 
-PopupWindow = Class.create(AbstractPopupWindow, {
+Popup.Window = Class.create(Popup.AbstractWindow, {
   initialize: function($super, element) {
     $super();
     element.remove();
@@ -145,7 +160,7 @@ PopupWindow = Class.create(AbstractPopupWindow, {
   }
 });
 
-PopupAjaxWindow = Class.create(AbstractPopupWindow, {
+Popup.AjaxWindow = Class.create(Popup.AbstractWindow, {
   initialize: function($super, url) {
     $super();
     this.url = url;
@@ -158,8 +173,17 @@ PopupAjaxWindow = Class.create(AbstractPopupWindow, {
   }
 });
 
+// Element extensions
 Element.addMethods({
   closePopup: function(element) {
     $(element).up('div.popup_window').hide();
   }
+});
+
+// Preload Images
+document.observe('dom:loaded', function() {
+  var body = $(document.getElementsByTagName('body')[0]);
+  Popup.BorderImages.each(function(image) {
+    body.insert($img({src: image, alt: '', style: 'display:none'}));
+  });
 });
