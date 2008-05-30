@@ -112,16 +112,16 @@ Popup.AbstractWindow = Class.create({
     this.bottom = $div({style: 'background: url(' + Popup.BorderImage + '); height: ' + Popup.BorderThickness + 'px'});
     this.element.insert(this.bottom);
     
-    var topLeft = $img({src: Popup.BorderTopLeftImage, style: 'position: absolute; left: 0; top: -' + Popup.BorderThickness + 'px'});
+    var topLeft = $div({style: 'background: url(' + Popup.BorderTopLeftImage + '); height: ' + Popup.BorderThickness + 'px; width: ' + Popup.BorderThickness + 'px; position: absolute; left: 0; top: -' + Popup.BorderThickness + 'px'});
     outer.insert(topLeft);
     
-    var topRight = $img({src: Popup.BorderTopRightImage, style: 'position: absolute; right: 0; top: -' + Popup.BorderThickness + 'px'});
+    var topRight = $div({style: 'background: url(' + Popup.BorderTopRightImage + '); height: ' + Popup.BorderThickness + 'px; width: ' + Popup.BorderThickness + 'px; position: absolute; right: 0; top: -' + Popup.BorderThickness + 'px'});
     outer.insert(topRight);
     
-    var bottomLeft = $img({src: Popup.BorderBottomLeftImage, style: 'position: absolute; left: 0; bottom: -' + Popup.BorderThickness + 'px'});
+    var bottomLeft = $div({style: 'background: url(' + Popup.BorderBottomLeftImage + '); height: ' + Popup.BorderThickness + 'px; width: ' + Popup.BorderThickness + 'px; position: absolute; left: 0; bottom: -' + Popup.BorderThickness + 'px'});
     outer.insert(bottomLeft);
     
-    var bottomRight = $img({src: Popup.BorderBottomRightImage, style: 'position: absolute; right: 0; bottom: -' + Popup.BorderThickness + 'px'});
+    var bottomRight = $div({style: 'background: url(' + Popup.BorderBottomRightImage + '); height: ' + Popup.BorderThickness + 'px; width: ' + Popup.BorderThickness + 'px; position: absolute; right: 0; bottom: -' + Popup.BorderThickness + 'px'});
     outer.insert(bottomRight);
     
     this.content = $div({style: 'background-color: white'});
