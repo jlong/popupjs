@@ -200,7 +200,7 @@ Popup.AjaxWindow = Class.create(Popup.AbstractWindow, {
   
   show: function($super) {
     if (!this.loaded || this.reload) {
-      new Ajax.Updater(this.content, this.url, {asynchronous: false, method: "get", onComplete: $super});
+      new Ajax.Updater(this.content, this.url, {asynchronous: false, method: "get", evalScripts: true, onComplete: $super});
       this.loaded = true;
     } else {
       $super();
