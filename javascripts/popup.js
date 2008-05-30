@@ -141,6 +141,14 @@ Popup.AbstractWindow = Class.create({
     this.element.hide();
   },
   
+  toggle: function() {
+    if (this.element.visible()) {
+      this.hide();
+    } else {
+      this.show();
+    }
+  },
+  
   focus: function() {
     var form = this.element.down('form');
     if (form) {
@@ -183,13 +191,20 @@ Popup.Window = Class.create(Popup.AbstractWindow, {
 });
 
 Popup.AjaxWindow = Class.create(Popup.AbstractWindow, {
-  initialize: function($super, url) {
+  initialize: function($super, url, options) {
     $super();
+    options = Object.extend({reload: true}, options);
     this.url = url;
+    this.reload = options.reload;
   },
   
   show: function($super) {
-    new Ajax.Updater(this.content, this.url, {asynchronous: false, method: "get", onComplete: $super});
+    if (!this.shown || this.reload) {
+      new Ajax.Updater(this.content, this.url, {asynchronous: false, method: "get", onComplete: $super});
+      this.loaded = true;
+    } else {
+      $super();
+    }
   }
 });
 
