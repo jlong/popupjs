@@ -131,8 +131,14 @@ Popup.AbstractWindow = Class.create({
     body.insert(this.element);
   },
   
+  makeDraggable: function() {
+    console.log('making draggable');
+    new Draggable(this.element.identify(), {handle: 'h3.title'});
+  },
+  
   show: function() {
     this.beforeShow();
+    if (this.element.down('.popup.draggable')) this.makeDraggable();
     this.element.show();
     this.afterShow();
   },
@@ -182,8 +188,8 @@ Popup.AbstractWindow = Class.create({
 });
 
 Popup.Window = Class.create(Popup.AbstractWindow, {
-  initialize: function($super, element) {
-    $super();
+  initialize: function($super, element, options) {
+    $super(options);
     element.remove();
     this.content.update(element);
     element.show();

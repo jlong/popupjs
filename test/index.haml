@@ -5,12 +5,13 @@
     %link{:rel=>"stylesheet", :type=>"text/css", :href=>"/stylesheets/facebook.css"}/
     %script{:type=>"text/javascript", :src=>"/javascripts/prototype.js"}
     %script{:type=>"text/javascript", :src=>"/javascripts/effects.js"}
+    / Required if you want draggable windows
+    %script{:type=>"text/javascript", :src=>"/javascripts/dragdrop.js"}
     %script{:type=>"text/javascript", :src=>"/javascripts/lowpro.js"}
     %script{:type=>"text/javascript", :src=>"/javascripts/popup.js"}
     %script{:type=>"text/javascript"}
       :plain
         Event.addBehavior({ 'a.popup': Popup.TriggerBehavior() });
-    
   %body
     %p
       %a.popup{:href=>"#test"} Popup
@@ -21,19 +22,29 @@
     %p
       %a.popup{:href=>"#search"} Popup Input
     
+    %p
+      %a.popup{:href=>"#dragme"} Draggable
+    
     .popup#test{:style=>"display: none"}
-      %h3 Popup Window
+      %h3.title Popup Window
       .popup_content
         %p Hello world!
         %p
           %a{:href=>"javascript: Element.closePopup('test')"} Close
     
     .popup#search{:style=>"display: none"}
-      %h3 Search
+      %h3.title Search
       .popup_content
         %form
           %p
             %input{:type=>"text", :name=>"query", :id=>"query", :value=>""}/
           %p
             %a{:href=>"javascript: Element.closePopup('search')"} Close
+    
+    .popup.draggable#dragme{:style=>"display: none"}
+      %h3.title Drag Me
+      .popup_content
+        %p Try dragging me around by my title.
+        %p
+          %a{:href=>"javascript: Element.closePopup('dragme')"} Close
     
