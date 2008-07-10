@@ -132,8 +132,7 @@ Popup.AbstractWindow = Class.create({
   },
   
   makeDraggable: function() {
-    console.log('making draggable');
-    new Draggable(this.element.identify(), {handle: 'h3.title'});
+    new Draggable(this.element.identify(), {handle: 'h3.title', scroll: window});
   },
   
   show: function() {
