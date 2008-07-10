@@ -132,18 +132,21 @@ Popup.AbstractWindow = Class.create({
   },
   
   makeDraggable: function() {
-    new Draggable(this.element.identify(), {handle: 'h3.title', scroll: window});
+    if (!this.draggable) {
+      console.log('making draggable');
+      this.draggable = new Draggable(this.element.identify(), {handle: 'h3.title', scroll: window});
+    }
   },
   
   show: function() {
     this.beforeShow();
-    if (this.element.down('.popup.draggable')) this.makeDraggable();
     this.element.show();
     this.afterShow();
   },
   
   hide: function() {
     this.element.hide();
+    this.draggable.destroy();
   },
   
   toggle: function() {
@@ -174,6 +177,7 @@ Popup.AbstractWindow = Class.create({
   },
   
   afterShow: function() {
+    if (this.element.down('.popup.draggable')) this.makeDraggable();
     this.focus();
   },
 
