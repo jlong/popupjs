@@ -28,10 +28,12 @@
     %p
       %a.popup{:href=>"/test/draggable_ajax.haml"} Draggable Ajax Popup
     
-    .popup#test{:style=>"display: none"}
+    .popup#test{:style=>"display: none; width: 20em;"}
       %h3.title Popup Window
       .popup_content
-        %p Hello world!
+        %p
+          This little javascript library allows you to create Facebook-style
+          popup windows with LowPro and Prototype.
         %p
           %a{:href=>"javascript: Element.closePopup('test')"} Close
     

@@ -144,7 +144,10 @@ Popup.AbstractWindow = Class.create({
   
   hide: function() {
     this.element.hide();
-    this.draggable.destroy();
+    if (this.draggable) {
+      this.draggable.destroy();
+      this.draggable = null;
+    }
   },
   
   toggle: function() {
