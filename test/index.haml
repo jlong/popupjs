@@ -1,4 +1,4 @@
-!!!Strict
+!!!
 %html
   %head
     %title Test
@@ -9,9 +9,8 @@
     %script{:type=>"text/javascript", :src=>"/javascripts/dragdrop.js"}
     %script{:type=>"text/javascript", :src=>"/javascripts/lowpro.js"}
     %script{:type=>"text/javascript", :src=>"/javascripts/popup.js"}
-    %script{:type=>"text/javascript"}
-      :plain
-        Event.addBehavior({ 'a.popup': Popup.TriggerBehavior() });
+    :javascript
+      Event.addBehavior({ 'a.popup': Popup.TriggerBehavior() });
   %body
     %p
       %a.popup{:href=>"#test"} Popup
