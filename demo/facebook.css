@@ -5,7 +5,7 @@
 body {
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   font-size: 80%;
-  background: url(/test/checkered.png);
+  background: url(checkered.png);
 }
 .popup {
   padding: 10px
