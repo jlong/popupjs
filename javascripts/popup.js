@@ -52,6 +52,7 @@ var Popup = {
   BorderTopRightImage: '/images/popup_border_top_right.png',
   BorderBottomLeftImage: '/images/popup_border_bottom_left.png',
   BorderBottomRightImage: '/images/popup_border_bottom_right.png',
+  Draggable: false,
   zindex: 10000
 };
 
@@ -97,7 +98,7 @@ Popup.TriggerBehavior = Behavior.create({
 
 Popup.AbstractWindow = Class.create({
   initialize: function(options) {
-    options = Object.extend({draggable: false}, options)
+    options = Object.extend({draggable: Popup.Draggable}, options)
     this.draggable = options.draggable;
     Popup.preloadImages();
     this.buildWindow();
