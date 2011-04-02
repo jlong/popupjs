@@ -1,6 +1,6 @@
 popup.js
 
-dependencies: prototype.js, effects.js, lowpro.js
+dependencies: prototype.js, dragdrop.js, effects.js, lowpro.js
 
 --------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ You will need to install the following hook:
 
 --------------------------------------------------------------------------
 
-Copyright (c) 2008, John W. Long
+Copyright (c) 2008-2011, John W. Long
 Portions copyright (c) 2008, Five Points Solutions, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a

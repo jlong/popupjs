@@ -20,60 +20,48 @@
         Popup.BorderBottomRightImage = '../images/popup_border_bottom_right.png';
         
         // Add trigger behavior
-        Event.addBehavior({ 'a.popup': Popup.TriggerBehavior() });
-      
+        Event.addBehavior({'a.popup': Popup.TriggerBehavior({
+          draggable: true, // make draggable by title
+          reload: true     // reload Ajax popups on second click
+        })});
+        
       //]]>
     </script> 
   </head>
-  <body> 
-    <p> 
+  <body>
+    <p>
       <a class="popup" href="#test">Popup</a> 
-    </p> 
-    <p> 
+    </p>
+    <p>
       <a class="popup" href="ajax.html">Ajax Popup</a> 
-    </p> 
-    <p> 
+    </p>
+    <p>
       <a class="popup" href="#search">Popup Input</a> 
-    </p> 
-    <p> 
-      <a class="popup" href="#dragme">Draggable</a> 
-    </p> 
-    <p> 
-      <a class="popup" href="draggable_ajax.html">Draggable Ajax Popup</a> 
-    </p> 
+    </p>
     <div class="popup" id="test" style="display: none; width: 20em;"> 
-      <h3 class="title">Popup Window</h3> 
+      <div class="popup_title">Popup Window</div> 
       <div class="popup_content"> 
-        <p> 
+        <p>
           This little javascript library allows you to create Facebook-style
           popup windows with LowPro and Prototype.
-        </p> 
-        <p> 
+        </p>
+        <p>
           <a href="javascript: Element.closePopup('test')">Close</a> 
-        </p> 
-      </div> 
-    </div> 
-    <div class="popup" id="search" style="display: none"> 
-      <h3 class="title">Search</h3> 
-      <div class="popup_content"> 
-        <form> 
-          <p> 
-            <input id="query" name="query" type="text" value="" /> 
-          </p> 
-          <p> 
-            <a href="javascript: Element.closePopup('search')">Close</a> 
-          </p> 
-        </form> 
-      </div> 
-    </div> 
-    <div class="popup draggable" id="dragme" style="display: none"> 
-      <h3 class="title">Drag Me</h3> 
-      <div class="popup_content"> 
-        <p>Try dragging me around by my title.</p> 
-        <p> 
-          <a href="javascript: Element.closePopup('dragme')">Close</a> 
-        </p> 
-      </div> 
-    </div> 
-  </body> 
+        </p>
+      </div>
+    </div>
+    <div class="popup" id="search" style="display: none">
+      <div class="popup_title">Search</div>
+      <div class="popup_content">
+        <form>
+          <p>
+            <input id="query" name="query" type="text" value="" />
+          </p>
+          <p>
+            <a href="javascript: Element.closePopup('search')">Close</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </body>
 </html>

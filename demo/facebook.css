@@ -10,21 +10,19 @@ body {
 .popup {
   padding: 10px
 }
-.popup h3.title {
+.popup_title {
   background-color: #6D84B4;
   border: 1px solid #3B5998;
   color: white;
   font-size: 110%;
   margin: -10px -10px 0 -10px;
   padding: 5px 9px;
+  cursor: move;
 }
-.popup .popup_content {
+.popup_content {
   font-size: 90%;
   border: 1px solid #555;
   border-top: none;
   margin: 0 -10px -10px -10px;
   padding: 1px 9px;
-}
-.popup.draggable h3.title {
-  cursor: move;
 }
