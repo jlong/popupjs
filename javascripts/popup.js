@@ -1,8 +1,8 @@
 /*
  *  popup.js
- *
- *  dependencies: prototype.js, effects.js, lowpro.js
- *
+ *  
+ *  dependencies: prototype.js, dragdrop.js, effects.js, lowpro.js
+ *  
  *  --------------------------------------------------------------------------
  *  
  *  Allows you to open up a URL inside of a Facebook-style window. To use
@@ -10,16 +10,16 @@
  *  HTML snippet that you would like to load up inside a window:
  *  
  *    <a class="popup" href="window.html">Window</a>
- *
+ *  
  *  You can also "popup" a specific div by referencing it by ID:
- *
+ *  
  *    <a class="popup" href="#my_div">Popup</a>
  *    <div id="my_div" style="display:none">Hello World!</div>
  *  
  *  You will need to install the following hook:
  *  
  *    Event.addBehavior({'a.popup': Popup.TriggerBehavior()});
- *
+ *  
  *  --------------------------------------------------------------------------
  *  
  *  Copyright (c) 2008-2011, John W. Long
