@@ -56,9 +56,15 @@ var Popup = {
   BorderBottomRightImage: '/images/popup_border_bottom_right.png',
   
   // CSS Classes
+  PopupClass: 'popup',
   WindowClass: 'popup_window',
   TitlebarClass: 'popup_title',
   CloseClass: 'close_popup',
+  PopupContentClass: 'popup_content',
+  ButtonsClass: 'popup_buttons',
+  
+  // Alert Dialog
+  Okay: 'Okay',
   
   // Draggable
   Draggable: false
@@ -221,7 +227,7 @@ Popup.AbstractWindow = Class.create({
     // noopp
   },
   
-  titleClick: function(event) {
+  titlebarClick: function(event) {
     this.bringToTop();
   },
   
@@ -234,7 +240,7 @@ Popup.AbstractWindow = Class.create({
   },
   
   click: function(event) {
-    if (event.target.hasClassName(Popup.TitlebarClass)) this.bringToTop();
+    if (event.target.hasClassName(Popup.TitlebarClass)) this.titlebarClick();
     if (event.target.hasClassName(Popup.CloseClass)) this.hide();
   },
   
@@ -287,6 +293,21 @@ Popup.AjaxWindow = Class.create(Popup.AbstractWindow, {
     }
   }
 });
+
+Popup.alert = function(message, options) {
+  options = Object.extend({title: 'Alert', width: '20em'}, options);
+  var element = $div({'class': Popup.PopupClass, style: 'width:' + options.width},
+    $div({'class': Popup.TitlebarClass}, options.title),
+    $div({'class': Popup.PopupContentClass},
+      $p(message),
+      $div({'class': Popup.ButtonsClass}, $button({'class': Popup.CloseClass}, Popup.Okay))
+    )
+  )
+  var body = $$('body').first();
+  body.insert(element);
+  var popup = new Popup.Window(element, options);
+  popup.show();
+}
 
 // Element extensions
 Element.addMethods({

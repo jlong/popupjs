@@ -20,16 +20,25 @@
         Popup.BorderBottomRightImage = '../images/popup_border_bottom_right.png';
         
         // Add trigger behavior for links with a class of "popup"
-        Event.addBehavior({'a.popup': Popup.TriggerBehavior({
-          draggable: true, // make draggable by title
-          reload: true     // reload Ajax popups on second click
-        })});
+        Event.addBehavior({
+          'a.popup': Popup.TriggerBehavior({
+            draggable: true, // make draggable by title
+            reload: true     // reload Ajax popups on second click
+          })
+        });
         
         // This is how you instantiate and show a window without a trigger link
         Event.observe(window, 'dom:loaded', function() {
           var popup = new Popup.Window('popup1', {draggable: true});
           popup.show();
         });
+        
+        // Wire in alert link
+        Event.addBehavior({
+          'a.alert:click': function() {
+            Popup.alert('Hello World!', {draggable: true});
+          }
+        })
         
       //]]>
     </script> 
@@ -50,6 +59,10 @@
     
     <p>
       <a class="popup" href="#search">Popup Input</a> 
+    </p>
+    
+    <p>
+      <a class="alert" href="javascript:void(0)">Alert</a>
     </p>
     
     <!-- This window will be shown when the page loads -->

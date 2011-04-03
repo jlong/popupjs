@@ -6,23 +6,51 @@ body {
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   font-size: 80%;
   background: url(checkered.png);
+  margin: 0;
+  padding: 10px 20px;
 }
-.popup {
+div.popup {
   padding: 10px
 }
-.popup_title {
-  background-color: #6D84B4;
-  border: 1px solid #3B5998;
+div.popup_title {
+  background-color: #6d84b4;
+  border: 1px solid #3b5998;
+  border-bottom: none;
   color: white;
+  font-weight: bold;
   font-size: 110%;
   margin: -10px -10px 0 -10px;
   padding: 5px 9px;
   cursor: move;
 }
-.popup_content {
+div.popup_content {
   font-size: 90%;
   border: 1px solid #555;
   border-top: none;
   margin: 0 -10px -10px -10px;
   padding: 1px 9px;
+}
+div.popup_buttons {
+  background: #f2f2f2;
+  border-top: 1px solid #ccc;
+  padding: 9px;
+  margin: 10px -9px 0;
+  text-align: right;
+}
+div.popup_buttons button {
+  border: 1px solid #29447e;
+  background: #627aac;
+  color: white;
+  font-weight: bold;
+  font-size: 110%;
+  padding: 4px 10px 5px;
+  box-shadow: #8a9cc2 0 1px 0 inset;
+  -webkit-box-shadow: #8a9cc2 0 1px 0 inset;
+  -moz-box-shadow: #8a9cc2 0 1px 0 inset;
+}
+div.popup_buttons button:active {
+  background: #4f6aa3;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
 }
