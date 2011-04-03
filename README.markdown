@@ -1,48 +1,58 @@
-popup.js
+PopupJS
+=======
 
-dependencies: prototype.js, dragdrop.js, effects.js, lowpro.js
+PopupJS is a LowPro and Prototype-based library for creating Facebook-like
+popup windows.
 
+Dependencies: prototype.js, dragdrop.js, effects.js, lowpro.js
+
+Homepage: <http://github.com/jlong/popupjs>
+
+
+Using PopupJS
 --------------------------------------------------------------------------
 
 PopupJS allows you to open up a URL inside of a Facebook-style window.
 To use simply assign the class "popup" to a link that contains an href to
 the HTML snippet that you would like to load up inside a window:
 
-  <a class="popup" href="window.html">Window</a>
+    <a class="popup" href="window.html">Window</a>
 
 You can also "popup" a specific div by referencing it by ID:
 
-  <a class="popup" href="#my_div">Popup</a>
-  <div id="my_div" style="display:none">Hello World!</div>
+    <a class="popup" href="#my_div">Popup</a>
+    <div id="my_div" style="display:none">Hello World!</div>
 
 You will need to install the following hook:
 
-  Event.addBehavior({'a.popup': Popup.TriggerBehavior(...)});
+    Event.addBehavior({'a.popup': Popup.TriggerBehavior(...)});
 
 You can also manually create a popup window if you need to do so in code:
 
-  Popup.Window('popup_div', ...)
+    Popup.Window('popup_div', ...)
 
 PopupJS also includes a couple of utility functions that make it easy to
 show common dialogs:
 
-  // OK alert dialog
-  Popup.alert('Hello World!');
-  
-  // Confirmation dialog with OK and Cancel buttons
-  Popup.confirm('Are you sure?', {
-    okay: function() { ... },
-    cancel: function() { ... }
-  });
-  
-  // Completely custom dialog with Yes, No, and Maybe
-  Popup.dialog({
-    title: 'Friend Request',
-    message: 'Add Dwight Schrute as a friend?',
-    buttons: ['Yes', 'No', 'Maybe'],
-    buttonClick: function(button) { ... }
-  });
+    // OK alert dialog
+    Popup.alert('Hello World!');
+    
+    // Confirmation dialog with OK and Cancel buttons
+    Popup.confirm('Are you sure?', {
+      okay: function() { ... },
+      cancel: function() { ... }
+    });
+    
+    // Completely custom dialog with Yes, No, and Maybe
+    Popup.dialog({
+      title: 'Friend Request',
+      message: 'Add Dwight Schrute as a friend?',
+      buttons: ['Yes', 'No', 'Maybe'],
+      buttonClick: function(button) { ... }
+    });
 
+
+License and Copyright
 --------------------------------------------------------------------------
 
 Copyright (c) 2008-2011, John W. Long
