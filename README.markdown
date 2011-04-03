@@ -29,7 +29,11 @@ You will need to install the following hook:
 
 You can also manually create a popup window if you need to do so in code:
 
-    Popup.Window('popup_div', ...);
+    var popup = new Popup.Window('my_div', {draggable: true});
+
+Or if you need to create an Ajax window:
+
+    var popup = new Popup.AjaxWindow(url, {draggable: true})
 
 PopupJS also includes a couple of utility functions that make it easy to
 show common dialogs:
