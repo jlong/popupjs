@@ -5,9 +5,9 @@
  *  
  *  --------------------------------------------------------------------------
  *  
- *  Allows you to open up a URL inside of a Facebook-style window. To use
- *  simply assign the class "popup" to a link that contains an href to the
- *  HTML snippet that you would like to load up inside a window:
+ *  PopupJS allows you to open up a URL inside of a Facebook-style window.
+ *  To use simply assign the class "popup" to a link that contains an href to
+ *  the HTML snippet that you would like to load up inside a window:
  *  
  *    <a class="popup" href="window.html">Window</a>
  *  
@@ -18,7 +18,31 @@
  *  
  *  You will need to install the following hook:
  *  
- *    Event.addBehavior({'a.popup': Popup.TriggerBehavior()});
+ *    Event.addBehavior({'a.popup': Popup.TriggerBehavior(...)});
+ *  
+ *  You can also manually create a popup window if you need to do so in code:
+ *  
+ *    Popup.Window('popup_div', ...)
+ *  
+ *  PopupJS also includes a couple of utility functions that make it easy to
+ *  show common dialogs:
+ *  
+ *    // OK alert dialog
+ *    Popup.alert('Hello World!');
+ *    
+ *    // Confirmation dialog with OK and Cancel buttons
+ *    Popup.confirm('Are you sure?', {
+ *      okay: function() { ... },
+ *      cancel: function() { ... }
+ *    });
+ *    
+ *    // Completely custom dialog with Yes, No, and Maybe
+ *    Popup.dialog({
+ *      title: 'Friend Request',
+ *      message: 'Add Dwight Schrute as a friend?',
+ *      buttons: ['Yes', 'No', 'Maybe'],
+ *      buttonClick: function(button) { ... }
+ *    });
  *  
  *  --------------------------------------------------------------------------
  *  
@@ -354,7 +378,6 @@ Popup.confirm = function(message, options) {
 Popup.alert = function(message, options) {
   options = Object.extend({
     title: 'Alert',
-    message: message,
     buttons: [Popup.Okay]
   }, options)
   
