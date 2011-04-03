@@ -46,18 +46,27 @@
  */
 
 var Popup = {
+  
+  // Borders
   BorderThickness: 8,
   BorderImage: '/images/popup_border_background.png',
   BorderTopLeftImage: '/images/popup_border_top_left.png',
   BorderTopRightImage: '/images/popup_border_top_right.png',
   BorderBottomLeftImage: '/images/popup_border_bottom_left.png',
   BorderBottomRightImage: '/images/popup_border_bottom_right.png',
-  Draggable: false,
-  zindex: 10000
+  
+  // CSS Classes
+  WindowClass: 'popup_window',
+  TitlebarClass: 'popup_title',
+  CloseClass: 'close_popup',
+  
+  // Draggable
+  Draggable: false
+  
 };
 
 Popup.windows = [];
-
+Popup.zindex = 10000;
 Popup.borderImages = function() {
   return $A([
     Popup.BorderImage,
@@ -96,6 +105,7 @@ Popup.TriggerBehavior = Behavior.create({
   popup: function() {
     this.window.show();
   }
+  
 });
 
 Popup.AbstractWindow = Class.create({
@@ -104,11 +114,12 @@ Popup.AbstractWindow = Class.create({
     this.draggable = options.draggable;
     Popup.preloadImages();
     this.buildWindow();
-    this.element.observe('click', this.click.bind(this))
+    this.element.observe('click', this.click.bind(this));
+    this.element.observe('popup:hide', this.hide.bind(this));
   },
   
   buildWindow: function() {
-    this.element = $div({'class': 'popup_window', style: 'display: none; padding: 0 ' + Popup.BorderThickness + 'px; position: absolute'});
+    this.element = $div({'class': Popup.WindowClass, style: 'display: none; padding: 0 ' + Popup.BorderThickness + 'px; position: absolute'});
     
     this.top = $div({style: 'background: url(' + Popup.BorderImage + '); height: ' + Popup.BorderThickness + 'px'});
     this.element.insert(this.top);
@@ -141,7 +152,7 @@ Popup.AbstractWindow = Class.create({
   createDraggable: function() {
     if (!this._draggable) {
       this._draggable = new Draggable(this.element.identify(), {
-        handle: 'popup_title',
+        handle: Popup.TitlebarClass,
         scroll: window,
         zindex: Popup.zindex,
         onStart: function() { this.startDrag(); return true; }.bind(this),
@@ -223,7 +234,8 @@ Popup.AbstractWindow = Class.create({
   },
   
   click: function(event) {
-    if (event.target.hasClassName('popup_title')) this.bringToTop();
+    if (event.target.hasClassName(Popup.TitlebarClass)) this.bringToTop();
+    if (event.target.hasClassName(Popup.CloseClass)) this.hide();
   },
   
   centerWindowInView: function() {
@@ -278,6 +290,6 @@ Popup.AjaxWindow = Class.create(Popup.AbstractWindow, {
 // Element extensions
 Element.addMethods({
   closePopup: function(element) {
-    $(element).up('div.popup_window').hide();
+    $(element).up('div.popup_window').fire('popup:hide');
   }
 });
