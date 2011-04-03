@@ -38,17 +38,31 @@ div.popup_buttons {
   text-align: right;
 }
 div.popup_buttons button {
+  border: 1px solid #999;
+  background: #eeeeed;
+  font-weight: bold;
+  font-size: 110%;
+  color: #333;
+  padding: 4px 8px 5px;
+  box-shadow: #fff 0 1px 0 inset;
+  -webkit-box-shadow: #fff 0 1px 0 inset;
+  -moz-box-shadow: #fff 0 1px 0 inset;
+}
+div.popup_buttons button.default {
   border: 1px solid #29447e;
   background: #627aac;
   color: white;
-  font-weight: bold;
-  font-size: 110%;
-  padding: 4px 10px 5px;
   box-shadow: #8a9cc2 0 1px 0 inset;
   -webkit-box-shadow: #8a9cc2 0 1px 0 inset;
   -moz-box-shadow: #8a9cc2 0 1px 0 inset;
 }
 div.popup_buttons button:active {
+  background: #ddd;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+}
+div.popup_buttons button.default:active {
   background: #4f6aa3;
   box-shadow: none;
   -webkit-box-shadow: none;

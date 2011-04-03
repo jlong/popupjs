@@ -62,9 +62,11 @@ var Popup = {
   CloseClass: 'close_popup',
   PopupContentClass: 'popup_content',
   ButtonsClass: 'popup_buttons',
+  DefaultButtonClass: 'default',
   
-  // Alert Dialog
+  // Dialog Buttons
   Okay: 'Okay',
+  Cancel: 'Cancel',
   
   // Draggable
   Draggable: false
@@ -294,19 +296,75 @@ Popup.AjaxWindow = Class.create(Popup.AbstractWindow, {
   }
 });
 
-Popup.alert = function(message, options) {
-  options = Object.extend({title: 'Alert', width: '20em'}, options);
-  var element = $div({'class': Popup.PopupClass, style: 'width:' + options.width},
-    $div({'class': Popup.TitlebarClass}, options.title),
-    $div({'class': Popup.PopupContentClass},
-      $p(message),
-      $div({'class': Popup.ButtonsClass}, $button({'class': Popup.CloseClass}, Popup.Okay))
-    )
-  )
-  var body = $$('body').first();
-  body.insert(element);
-  var popup = new Popup.Window(element, options);
+Popup.dialog = function(options) {
+  options = Object.extend({
+    title: 'Dialog',
+    message: '[message]',
+    width: '20em',
+    buttons: [Popup.Okay],
+    buttonClick: function() { }
+  }, options);
+  
+  var wrapper = $div({'class': Popup.PopupClass, style: 'width:' + options.width});
+  wrapper.insert($div({'class': Popup.TitlebarClass}, options.title));
+  
+  var content = $div({'class': Popup.PopupContentClass});
+  var paragraph = $p();
+  paragraph.innerHTML = options.message.gsub('\n', '<br />');
+  content.insert(paragraph);
+  
+  var buttons = $div({'class': Popup.ButtonsClass});
+  for (var index = 0; index < options.buttons.length; index++) {
+    var classes = Popup.CloseClass;
+    if (index == 0) classes += ' ' + Popup.DefaultButtonClass;
+    buttons.insert($button({'class': classes}, options.buttons[index]));
+  }
+  content.insert(buttons);
+  wrapper.insert(content);
+  
+  var popup = new Popup.AbstractWindow(options);
+  popup.content.insert(wrapper);
+  
+  popup.element.observe('click', function(event) {
+    var button = event.target;
+    if (button.nodeName == "BUTTON") options.buttonClick(button.innerHTML);
+  }.bind(this));
+  
   popup.show();
+}
+
+Popup.alert = function(message, options) {
+  options = Object.extend({
+    title: 'Alert',
+    message: message,
+    width: '20em',
+    buttons: [Popup.Okay],
+    okay: function() { }
+  }, options)
+  
+  options.buttonClick = options.buttonClick || function(button) {
+    if (button == Popup.Okay) options.okay();
+  }
+  
+  Popup.dialog(options)
+}
+
+Popup.confirm = function(message, options) {
+  options = Object.extend({
+    title: 'Confirm',
+    message: message,
+    width: '20em',
+    buttons: [Popup.Okay, Popup.Cancel],
+    okay: function() { },
+    cancel: function() { }
+  }, options)
+  
+  options.buttonClick = options.buttonClick || function(button) {
+    if (button == Popup.Okay) options.okay();
+    if (button == Popup.Cancel) options.cancel();
+  }
+  
+  Popup.dialog(options);
 }
 
 // Element extensions

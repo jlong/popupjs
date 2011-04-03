@@ -19,25 +19,48 @@
         Popup.BorderBottomLeftImage  = '../images/popup_border_bottom_left.png';
         Popup.BorderBottomRightImage = '../images/popup_border_bottom_right.png';
         
-        // Add trigger behavior for links with a class of "popup"
+        // Every popup should be draggable by the tilebar
+        Popup.Draggable = true;
+        
+        // Add trigger behavior for links with a class of "popup".
         Event.addBehavior({
           'a.popup': Popup.TriggerBehavior({
-            draggable: true, // make draggable by title
             reload: true     // reload Ajax popups on second click
           })
         });
         
-        // This is how you instantiate and show a window without a trigger link
+        // This is how you instantiate and show a window without a trigger link.
         Event.observe(window, 'dom:loaded', function() {
-          var popup = new Popup.Window('popup1', {draggable: true});
+          var popup = new Popup.Window('popup1');
           popup.show();
         });
         
-        // Wire in alert link
+        // Wire in alert, confirm, and dialog links. Standard LowPro stuff.
         Event.addBehavior({
-          'a.alert:click': function() {
-            Popup.alert('Hello World!', {draggable: true});
+          
+          'a#alert:click': function() {
+            Popup.alert('Hello World!');
+          },
+          
+          'a#confirm:click': function() {
+            Popup.confirm('Are you sure?', {
+              okay: function() { Popup.alert("Yep, you're sure.") },
+              cancel: function() { Popup.alert( "Not sure, eh?") },
+              draggable: true
+            });
+          },
+          
+          'a#dialog:click': function() {
+            Popup.dialog({
+              title: 'Custom Dialog',
+              message: 'This is a completely custom dialog with three buttons.\n\nChoose one.',
+              buttons: ['Yes', 'No', 'Maybe'],
+              buttonClick: function(button) { Popup.alert('You chose: ' + button) },
+              width: '30em',
+              draggable: true
+            });
           }
+          
         })
         
       //]]>
@@ -62,7 +85,15 @@
     </p>
     
     <p>
-      <a class="alert" href="javascript:void(0)">Alert</a>
+      <a id="alert" href="javascript:void(0)">Alert</a>
+    </p>
+    
+    <p>
+      <a id="confirm" href="javascript:void(0)">Confirm</a>
+    </p>
+    
+    <p>
+      <a id="dialog" href="javascript:void(0)">Dialog</a>
     </p>
     
     <!-- This window will be shown when the page loads -->
