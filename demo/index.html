@@ -45,8 +45,7 @@
           'a#confirm:click': function() {
             Popup.confirm('Are you sure?', {
               okay: function() { Popup.alert("Yep, you're sure.") },
-              cancel: function() { Popup.alert( "Not sure, eh?") },
-              draggable: true
+              cancel: function() { Popup.alert( "Not sure, eh?") }
             });
           },
           
@@ -56,8 +55,7 @@
               message: 'This is a completely custom dialog with three buttons.\n\nChoose one.',
               buttons: ['Yes', 'No', 'Maybe'],
               buttonClick: function(button) { Popup.alert('You chose: ' + button) },
-              width: '30em',
-              draggable: true
+              width: '30em'
             });
           }
           
