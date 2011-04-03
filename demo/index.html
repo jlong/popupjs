@@ -25,6 +25,12 @@
           reload: true     // reload Ajax popups on second click
         })});
         
+        // This is how you instantiate and show a window without a trigger link
+        Event.observe(window, 'dom:loaded', function() {
+          var popup = new Popup.Window('popup1', {draggable: true});
+          popup.show();
+        });
+        
       //]]>
     </script> 
   </head>
@@ -32,9 +38,9 @@
     
     <p>
       <!-- A simple popup trigger link -->
-      <a class="popup" href="#test">Popup</a>
+      <a class="popup" href="#popup2">Popup</a>
       <!-- Trigger links can reference the same popup -->
-      <a class="popup" href="#test">Same Popup</a> 
+      <a class="popup" href="#popup2">Same Popup</a> 
     </p>
     
     <p>
@@ -46,13 +52,26 @@
       <a class="popup" href="#search">Popup Input</a> 
     </p>
     
-    <!-- Commonly inline popups set their display to "none" and may specify their width -->
-    <div class="popup" id="test" style="display: none; width: 20em;"> 
+    <!-- This window will be shown when the page loads -->
+    <!-- Commonly inline popups set their display to "none" and may also specify their width -->
+    <div class="popup" id="popup1" style="display: none; width: 24em;"> 
+      <div class="popup_title">Welcome!</div> 
+      <div class="popup_content"> 
+        <p>
+          This little window was created with Popup.js. A library that allows
+          you to easily create Facebook-style windows with LowPro and Prototype.
+        </p>
+        <p>
+          <!-- Elements with the "close_popup" class will hide the popup -->
+          <a class="close_popup" href="javascript:void(0)">Close</a> 
+        </p>
+      </div>
+    </div>
+    <div class="popup" id="popup2" style="display: none"> 
       <div class="popup_title">Popup Window</div> 
       <div class="popup_content"> 
         <p>
-          This little javascript library allows you to create Facebook-style
-          popup windows with LowPro and Prototype.
+          Wow! You just clicked on a link.
         </p>
         <p>
           <!-- Elements with the "close_popup" class will hide the popup -->

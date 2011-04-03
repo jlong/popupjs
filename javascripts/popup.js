@@ -257,6 +257,7 @@ Popup.AbstractWindow = Class.create({
 Popup.Window = Class.create(Popup.AbstractWindow, {
   initialize: function($super, element, options) {
     $super(options);
+    element = $(element);
     element.remove();
     this.content.update(element);
     element.show();
