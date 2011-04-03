@@ -29,7 +29,7 @@ You will need to install the following hook:
 
 You can also manually create a popup window if you need to do so in code:
 
-    Popup.Window('popup_div', ...)
+    Popup.Window('popup_div', ...);
 
 PopupJS also includes a couple of utility functions that make it easy to
 show common dialogs:
