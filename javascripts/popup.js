@@ -333,22 +333,6 @@ Popup.dialog = function(options) {
   popup.show();
 }
 
-Popup.alert = function(message, options) {
-  options = Object.extend({
-    title: 'Alert',
-    message: message,
-    width: '20em',
-    buttons: [Popup.Okay],
-    okay: function() { }
-  }, options)
-  
-  options.buttonClick = options.buttonClick || function(button) {
-    if (button == Popup.Okay) options.okay();
-  }
-  
-  Popup.dialog(options)
-}
-
 Popup.confirm = function(message, options) {
   options = Object.extend({
     title: 'Confirm',
@@ -365,6 +349,16 @@ Popup.confirm = function(message, options) {
   }
   
   Popup.dialog(options);
+}
+
+Popup.alert = function(message, options) {
+  options = Object.extend({
+    title: 'Alert',
+    message: message,
+    buttons: [Popup.Okay]
+  }, options)
+  
+  Popup.confirm(message, options)
 }
 
 // Element extensions
