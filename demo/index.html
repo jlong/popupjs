@@ -12,7 +12,8 @@
     <script type="text/javascript"> 
       //<![CDATA[
         
-        // We need to tell Popup.js where our images are:
+        // We need to tell Popup.js where our images are. Normally this isn't
+        // needed. Just store the images in your "images" folder.
         Popup.BorderImage            = '../src/images/popup_border_background.png';
         Popup.BorderTopLeftImage     = '../src/images/popup_border_top_left.png';
         Popup.BorderTopRightImage    = '../src/images/popup_border_top_right.png';
@@ -21,6 +22,9 @@
         
         // Every popup should be draggable by the tilebar
         Popup.Draggable = true;
+        
+        // Focus automatically on first control in popup
+        Popup.AutoFocus = true; // here to document feature; true by default
         
         // Add trigger behavior for links with a class of "popup".
         Event.addBehavior({
