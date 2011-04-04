@@ -34,7 +34,7 @@
  * 
  * Or if you need to create an Ajax window:
  * 
- *     var popup = new Popup.AjaxWindow(url, {draggable: true})
+ *     var popup = new Popup.AjaxWindow(url, {draggable: true});
  * 
  * PopupJS also includes a couple of utility functions that make it easy to
  * show common dialogs:
@@ -106,13 +106,15 @@ var Popup = {
   Okay: 'Okay',
   Cancel: 'Cancel',
   
-  // Draggable
-  Draggable: false
+  // Other Configuration
+  Draggable: false,   // Window is draggable by titlebar
+  AutoFocus: true     // Focus on first control in popup
   
 };
 
 Popup.windows = [];
 Popup.zindex = 10000;
+
 Popup.borderImages = function() {
   return $A([
     Popup.BorderImage,
@@ -156,10 +158,18 @@ Popup.TriggerBehavior = Behavior.create({
 
 Popup.AbstractWindow = Class.create({
   initialize: function(options) {
-    options = Object.extend({draggable: Popup.Draggable}, options)
+    options = Object.extend({
+      draggable: Popup.Draggable,
+      autofocus: Popup.AutoFocus
+    }, options)
+    
     this.draggable = options.draggable;
+    this.autofocus = options.autofocus;
+    
     Popup.preloadImages();
+    
     this.buildWindow();
+    
     this.element.observe('click', this.click.bind(this));
     this.element.observe('popup:hide', this.hide.bind(this));
   },
@@ -256,7 +266,7 @@ Popup.AbstractWindow = Class.create({
   
   afterShow: function() {
     if (this.draggable) this.createDraggable();
-    this.focus();
+    if (this.autofocus) this.focus();
   },
   
   beforeHide: function() {
