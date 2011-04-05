@@ -35,12 +35,19 @@
         
         // This is how you instantiate and show a window without a trigger link.
         Event.observe(window, 'dom:loaded', function() {
-          var popup = new Popup.Window('popup1');
-          popup.show();
+          Popup.alert(
+            'This little window was created with PopupJS. A javascript library that allows you to easily create Facebook-style windows with LowPro and Prototype.',
+            {title: 'Popup Window', width: '28em'}
+          )
         });
         
         // Wire in alert, confirm, and dialog links. Standard LowPro stuff.
         Event.addBehavior({
+          
+          'a#manual:click': function() {
+            var popup = new Popup.Window('manual')
+            popup.show();
+          },
           
           'a#alert:click': function() {
             Popup.alert('Hello World!');
@@ -72,9 +79,9 @@
     
     <p>
       <!-- A simple popup trigger link -->
-      <a class="popup" href="#popup2">Popup</a>
+      <a class="popup" href="#popup1">Popup</a>
       <!-- Trigger links can reference the same popup -->
-      <a class="popup" href="#popup2">Same Popup</a> 
+      <a class="popup" href="#popup1">Same Popup</a> 
     </p>
     
     <p>
@@ -84,6 +91,10 @@
     
     <p>
       <a class="popup" href="#search">Popup Input</a> 
+    </p>
+    
+    <p>
+      <a id="manual_popup" href="javascript:void(0)">Manual Popup</a>
     </p>
     
     <p>
@@ -100,20 +111,7 @@
     
     <!-- This window will be shown when the page loads -->
     <!-- Commonly inline popups set their display to "none" and may also specify their width -->
-    <div class="popup" id="popup1" style="display: none; width: 24em;"> 
-      <div class="popup_title">Welcome!</div> 
-      <div class="popup_content"> 
-        <p>
-          This little window was created with Popup.js. A library that allows
-          you to easily create Facebook-style windows with LowPro and Prototype.
-        </p>
-        <p>
-          <!-- Elements with the "close_popup" class will hide the popup -->
-          <a class="close_popup" href="javascript:void(0)">Close</a> 
-        </p>
-      </div>
-    </div>
-    <div class="popup" id="popup2" style="display: none"> 
+    <div class="popup" id="popup1" style="display: none"> 
       <div class="popup_title">Popup Window</div> 
       <div class="popup_content"> 
         <p>
@@ -131,7 +129,7 @@
       <div class="popup_content">
         <form>
           <p>
-            <!-- The first input element on a form will receive the focus on show -->
+            <!-- The first input element on a form will receive the focus when shown -->
             <input id="query" name="query" type="text" value="" />
           </p>
           <p>
@@ -139,6 +137,19 @@
             <a href="javascript: Element.closePopup('search')">Close</a>
           </p>
         </form>
+      </div>
+    </div>
+    
+    <div class="popup" id="manual_popup" style="display: none; width: 24em;"> 
+      <div class="popup_title">Manual Popup Window</div> 
+      <div class="popup_content"> 
+        <p>
+          This window was created by manual instantiating a popup window class with.
+        </p>
+        <p>
+          <!-- Elements with the "close_popup" class will hide the popup -->
+          <a class="close_popup" href="javascript:void(0)">Close</a> 
+        </p>
       </div>
     </div>
     
