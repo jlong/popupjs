@@ -1,12 +1,14 @@
 PopupJS
 =======
 
-PopupJS is a LowPro and Prototype-based library for creating Facebook-like
-popup windows.
+<img src="/downloads/jlong/popupjs/popup.png" alt="popup window" />
+
+PopupJS is a simple LowPro and Prototype-based library for creating
+Facebook-like popup windows and dialogs.
 
 Dependencies: prototype.js, dragdrop.js, effects.js, lowpro.js
 
-Homepage: <http://github.com/jlong/popupjs>
+Learn More: <http://github.com/jlong/popupjs>
 
 
 Using PopupJS

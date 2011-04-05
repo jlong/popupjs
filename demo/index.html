@@ -45,7 +45,7 @@
         Event.addBehavior({
           
           'a#manual:click': function() {
-            var popup = new Popup.Window('manual')
+            var popup = new Popup.Window('mpopup');
             popup.show();
           },
           
@@ -86,15 +86,15 @@
     
     <p>
       <!-- An ajax popup is as simple using a real URL -->
-      <a class="popup" href="./ajax.html">Ajax Popup</a> 
+      <a class="popup" href="./ajax.html">Ajax</a> 
     </p>
     
     <p>
-      <a class="popup" href="#search">Popup Input</a> 
+      <a class="popup" href="#search">Input</a> 
     </p>
     
     <p>
-      <a id="manual_popup" href="javascript:void(0)">Manual Popup</a>
+      <a id="manual" href="javascript:void(0)">Manual</a>
     </p>
     
     <p>
@@ -140,12 +140,12 @@
       </div>
     </div>
     
-    <div class="popup" id="manual_popup" style="display: none; width: 24em;"> 
+    <div class="popup" id="mpopup" style="display: none; width: 24em;"> 
       <div class="popup_title">Manual Popup Window</div> 
       <div class="popup_content"> 
-        <p>
-          This window was created by manual instantiating a popup window class with.
-        </p>
+        <p>This window was created by manually creating a popup window object with:</p>
+        <pre style="font-size: 120%"><code>var popup = new Popup.Window('mpopup');
+popup.show();</code></pre>
         <p>
           <!-- Elements with the "close_popup" class will hide the popup -->
           <a class="close_popup" href="javascript:void(0)">Close</a> 

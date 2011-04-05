@@ -12,6 +12,8 @@ file 'dist/popup.js' => ['README.markdown', 'src/javascripts/popup.js'] do |t|
   target = t.name
   unless uptodate?(target, t.prerequisites)
     readme = IO.read(t.prerequisites.first)
+    readme = readme.gsub(%r{<img.+?/>\n\n}, '')
+    readme = readme.gsub(/Using PopupJS.+\z/m, '')
     readme = "/*\n" + readme.split("\n").map { |line| " * #{line}" }.join("\n") + "\n *\n */\n\n"
     popupjs = IO.read(t.prerequisites.last)
     open(target, 'w') do |f|
