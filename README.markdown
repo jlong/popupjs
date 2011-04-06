@@ -122,7 +122,7 @@ the window will be reloaded each time the window is shown.
 
 To hide a window, use the hide function:
 
-   popup.hide();
+    popup.hide();
 
 
 Popup Dialogs
