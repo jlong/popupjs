@@ -174,6 +174,12 @@ even better, [submit a pull request][7]. Contributions are welcome and
 encouraged.
 
 
+License
+------------------------------------------------------------------------------
+
+PopupJS is distributed under an MIT-style license. Use it for good or for
+awesome.
+
 
 [1]: http://prototypejs.org
 [2]: http://script.aculo.us
