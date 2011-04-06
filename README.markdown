@@ -11,7 +11,7 @@ Dependencies: prototype.js, dragdrop.js, effects.js, lowpro.js
 
 Learn More: <http://github.com/jlong/popupjs>
 
-Copyright (c) 2008-2011, John W. Long
+Copyright (c) 2008-2011, John W. Long  
 Portions copyright (c) 2008, Five Points Solutions, Inc.
 
 
