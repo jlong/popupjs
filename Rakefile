@@ -13,7 +13,7 @@ file 'dist/popup.js' => ['README.markdown', 'src/javascripts/popup.js'] do |t|
   unless uptodate?(target, t.prerequisites)
     readme = IO.read(t.prerequisites.first)
     readme = readme.gsub(%r{<img.+?/>\n\n}, '')
-    readme = readme.gsub(/Using PopupJS.+\z/m, '')
+    readme = readme.gsub(/Installation\n.+\z/m, '')
     readme = "/*\n" + readme.split("\n").map { |line| " * #{line}" }.join("\n") + "\n *\n */\n\n"
     popupjs = IO.read(t.prerequisites.last)
     open(target, 'w') do |f|
@@ -39,9 +39,26 @@ task 'mkdist' do
   mkpath 'dist'
 end
 
-task 'imgdist' => :mkdist do
+task 'distother' => :mkdist do
   cp_r 'src/images', 'dist/'
+  cp 'src/stylesheets/facebook.css', 'dist/'
+  cp 'LICENSE', 'dist/'
+  cp 'README.markdown', 'dist/README'
 end
 
 desc 'Assemble files for distribution'
-task :dist => [:mkdist, 'dist/popup.js', 'dist/popup.min.js', :imgdist]
+task :dist => [:clean, :mkdist, 'dist/popup.js', 'dist/popup.min.js', :distother]
+
+task 'mkpkg' do
+  mkpath 'pkg'
+end
+
+task 'pkg/popupjs.zip' do
+  cd 'dist' do
+    files = FileList['**/*']
+    `zip ../pkg/popupjs.zip #{files.to_a * " "}`
+  end
+end
+
+desc 'Package files into zip file'
+task :package => [:dist, :mkpkg, 'pkg/popupjs.zip']

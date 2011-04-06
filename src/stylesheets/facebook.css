@@ -2,13 +2,6 @@
   facebook.css - styles for facebook-like popups
 */
 
-body {
-  font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
-  font-size: 80%;
-  background: url(checkered.png);
-  margin: 0;
-  padding: 10px 20px;
-}
 div.popup {
   padding: 10px
 }
